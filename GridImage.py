@@ -23,9 +23,8 @@ class GridImage:
         cv2.imshow(self.__filepath, cv2.resize(image, (500, 500)))
         cv2.waitKey(0)
 
-    def mask_image(self):
-        masked_image = cv2.threshold(self.__image, 100, 255, cv2.THRESH_BINARY_INV)[1]
-        self.__display_img(masked_image)
+    def mask_image(self, thresh=100):
+        return cv2.threshold(self.__image, thresh, 255, cv2.THRESH_BINARY_INV)[1]
 
     def find_squares(self):
         top_left = [math.inf, math.inf]
@@ -33,24 +32,27 @@ class GridImage:
         bot_left = [math.inf, 0]
         bot_right = [0, 0]
 
-        _, thresh = cv2.threshold(self.__image, 127, 255, cv2.THRESH_BINARY) # Adjust threshold value as needed
-        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        thresh = self.mask_image(thresh=127) # Adjust threshold value as needed
+        contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
         print(self.__width, self.__height)
+
         for contour in contours:
             perimeter = cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, 0.04 * perimeter, True)
             if len(approx) == 4:
                 x, y, w, h = cv2.boundingRect(approx)
 
-                print(x, y, self.__width/2, self.__height/2)
+                # if y < 3000:
+                #     print(x, y, self.__width/2, self.__height/2)
                 
-                if y > 0 and y < top_left[1] and x < self.__width / 2 and y < self.__height / 2:
+                if y > 0 and y < top_left[1] and x < self.__width / 2:
                     top_left = [x, y]
-                if y > 0 and y < top_left[1] and x > self.__width / 2 and y < self.__height / 2:
+                if y > 0 and y < top_left[1] and x > self.__width / 2:
                     top_right = [x, y]
-                if y < self.__height - 1 and y > bot_left[1] and x < self.__width / 2 and y > self.__height / 2:
+                if y < self.__height - 1 and y > bot_left[1] and x < self.__width / 2:
                     bot_left = [x, y]
-                if y < self.__height - 1 and y > bot_right[1] and x > self.__width / 2 and y > self.__height / 2:
+                if y < self.__height - 1 and y > bot_right[1] and x > self.__width / 2:
                     bot_right = [x, y]
                 #top_left = (x, y)
                 #top_right = (x + w, y)
@@ -60,11 +62,4 @@ class GridImage:
         print(top_left, top_right, bot_left, bot_right)
 
 gridImage = GridImage("grid_image.jpg")
-# gridImage.display()
 gridImage.find_squares()
-
-
-
-gridImage.mask_image()
-
-
