@@ -1,35 +1,26 @@
-from PIL import Image
+import cv2
 
 class GridImage:
     def __init__(self, filepath):
         self.__filepath = filepath
-
-        if not self.__open_image():
-            return None
-
+    
+        self.__load_image()
         self.__grayscale_convert()
-        self.__load_image_pixels()
 
-        self.__width, self.__height = self.__image.size
+        self.__height, self.__width = self.__image.shape[:2]
 
-    def __open_image(self):
-        try: 
-            self.__image = Image.open(self.__filepath)
-            return True
-        except IOError:
-            return False
+    def __load_image(self):
+        self.__image = cv2.imread(self.__filepath)
 
     def __grayscale_convert(self):
-        self.__image = self.__image.convert("L")
+        self.__image = cv2.cvtColor(self.__image, cv2.COLOR_BGR2GRAY)
 
-    def __load_image_pixels(self):
-        self.__image_pixels = self.__image.load()
+    def display(self):
+        cv2.imshow(self.__filepath, self.__image)
+        cv2.waitKey(0)
 
     def find_top_square(self):
-        maxn = 0
-        for i in range(int(self.__width / 6)):
-            for j in range(int(self.__height / 6)):                    
-                print(self.__image_pixels[i, j])
+        pass
 
 gridImage = GridImage("grid_image.jpg")
-gridImage.find_top_square()
+gridImage.display()
