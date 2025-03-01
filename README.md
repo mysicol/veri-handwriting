@@ -2,6 +2,12 @@
 
 ## This is a README.
 
-No longer empty.
+In a terminal, run:
 
-Issue resolved.
+`cd front/`
+
+`npm i` 
+
+`npm run dev`
+
+Visit the localhost address generated to view the program.
