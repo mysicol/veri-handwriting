@@ -1,27 +1,29 @@
 from PIL import Image
 
-def open_image(filepath):
-    try: 
-        return Image.open(filepath)
-    except IOError:
-        return None
+class GridImage:
+    def __init__(self, filepath):
+        self.__filepath = filepath
 
-def grayscale_convert(image_file):
-    return image_file.convert("L")
+        if not self.__open_image():
+            return None
 
-def load_image(image_file):
-    return image_file.load()
+        self.__grayscale_convert()
+        self.__load_image_pixels()
 
-def find_top_square():
-    print(len(image_pixels))
+    def __open_image(self):
+        try: 
+            self.__image_file = Image.open(self.__filepath)
+            return True
+        except IOError:
+            return False
 
-image_file = open_image("IMG_2099.jpg")
-print(image_file)
+    def __grayscale_convert(self):
+        self.__image_file = self.__image_file.convert("L")
 
-gray_image_file = grayscale_convert(image_file)
-print(gray_image_file)
+    def __load_image_pixels(self):
+        self.__image_pixels = self.__image_file.load()
 
-image_pixels = load_image(gray_image_file)
-print(image_pixels)
+    def find_top_square(image_pixels):
+        print(image_pixels)
 
-find_top_square(image_pixels)
+gridImage = GridImage("grid_image.jpg")
