@@ -70,6 +70,26 @@ class GridImage:
             self.__display_square(square)
 
         print(top_left, top_right, bot_left, bot_right)
+        self.__top_left = top_left
+        self.__top_right = top_right
+        self.__bot_left = bot_left
+        self.__bot_right = bot_right
 
-gridImage = GridImage("test_grids/grid_image_7.jpg")
+    def find_top_left_cell(self):
+        crop_y = ((self.__bot_left[1] - self.__top_right[1]) / 8) + self.__top_left[1]
+        crop_y = int(crop_y)
+        self.__display_cropped_image(self.__top_left[0]+40, crop_y, 400, 400)
+        #cropped_image = self.__image[crop_y:crop_y+300, self.__top_left[0]:self.__top_left[0]+300]
+        x_offset = self.__top_left[0]
+        y_offset = crop_y
+
+
+    def test_find_top_left_cell(self):
+        gridImage.find_top_left_cell()       
+        #self.__display_cropped_image(x, y, 300, 300)
+        
+        
+
+gridImage = GridImage("test_grids/grid_image_4.jpg")
 gridImage.find_squares()
+gridImage.test_find_top_left_cell()
