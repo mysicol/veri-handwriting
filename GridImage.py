@@ -65,12 +65,7 @@ class GridImage:
                     if y < self.__height - 1 and y > bot_left[1] and x < self.__width / 2:
                         bot_left = [x, y, w, h]
                     if y < self.__height - 1 and y > bot_right[1] and x > self.__width / 2:
-                        bot_right = [x, y, w, h]
-                #top_left = (x, y)
-                #top_right = (x + w, y)
-                #bottom_left = (x, y + h)
-                #bottom_right = (x + w, y + h)
-                #print(f"Square coordinates: {top_left}, {top_right}, {bottom_left}, {bottom_right}") 
+                        bot_right = [x, y, w, h] 
         for square in [top_left, top_right, bot_left, bot_right]:
             self.__display_square(square)
 
