@@ -4,7 +4,7 @@ import uuid
 
 class CharacterImage():
     def __init__(self, image, x, y, w, h, save_directory="characters-sample", id=str(uuid.uuid4()), character_type="none", character_neatness="none"):
-        self.__image = image[x:x+w, y:y+h]
+        self.__image = image[y:y+h, x:x+w]
         self.__image_name = "Character"
         self.__title = character_type + "_" + character_neatness + "_" + id
         self.__save_directory = save_directory
