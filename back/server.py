@@ -23,7 +23,7 @@ def image():
 
     return jsonify(
         {
-            "data": {
+            "summary": {
                 "score": 75
             }
         }
