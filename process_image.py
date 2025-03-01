@@ -10,20 +10,26 @@ class GridImage:
         self.__grayscale_convert()
         self.__load_image_pixels()
 
+        self.__width, self.__height = self.__image.size
+
     def __open_image(self):
         try: 
-            self.__image_file = Image.open(self.__filepath)
+            self.__image = Image.open(self.__filepath)
             return True
         except IOError:
             return False
 
     def __grayscale_convert(self):
-        self.__image_file = self.__image_file.convert("L")
+        self.__image = self.__image.convert("L")
 
     def __load_image_pixels(self):
-        self.__image_pixels = self.__image_file.load()
+        self.__image_pixels = self.__image.load()
 
-    def find_top_square(image_pixels):
-        print(image_pixels)
+    def find_top_square(self):
+        maxn = 0
+        for i in range(int(self.__width / 6)):
+            for j in range(int(self.__height / 6)):                    
+                print(self.__image_pixels[i, j])
 
 gridImage = GridImage("grid_image.jpg")
+gridImage.find_top_square()
