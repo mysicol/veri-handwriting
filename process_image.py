@@ -16,11 +16,16 @@ class GridImage:
         self.__image = cv2.cvtColor(self.__image, cv2.COLOR_BGR2GRAY)
 
     def display(self):
-        cv2.imshow(self.__filepath, self.__image)
+        self.__display_img(self.__image)
+
+    def __display_img(self, image):
+        cv2.imshow(self.__filepath, cv2.resize(image, (500, 500)))
         cv2.waitKey(0)
 
-    def find_top_square(self):
-        pass
+    def mask_image(self):
+        masked_image = cv2.threshold(self.__image, 100, 255, cv2.THRESH_BINARY_INV)[1]
+        self.__display_img(masked_image)
 
 gridImage = GridImage("grid_image.jpg")
-gridImage.display()
+# gridImage.display()
+gridImage.mask_image()
