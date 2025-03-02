@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from GPTInterface import GPTInterface
 from MLModel import Methods, makeModels, MLModel
-import sqlite3
 import pickle
 
 app = Flask(__name__)
