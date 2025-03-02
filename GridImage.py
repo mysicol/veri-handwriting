@@ -81,6 +81,9 @@ class GridImage:
         self.__box_width = int((top_left[2] + top_right[2] + bot_left[2]) / 3)
         self.__box_height = int((top_left[3] + top_right[3] + bot_left[3]) / 3)
 
+        self.__w_approx = int(self.__box_width*0.8)
+        self.__h_approx = int(self.__box_height)
+
     def find_top_left_cell(self):        
         top_left = int(self.__top_left[1] + (1.5 * self.__box_height))
 
@@ -98,18 +101,13 @@ class GridImage:
             x, y, w, h = cv2.boundingRect(approx)
 
             if w > self.__box_width / 2 and h > self.__box_height / 2:
-                self.__display_cropped_image(search_x+x, search_y+y, int(self.__box_width*0.7), int(self.__box_height*1.1))
+                self.__display_cropped_image(search_x+x, search_y+y, self.__w_approx, self.__h_approx)
+                return search_x+x, search_y+y
 
-        self.__display_cropped_image(self.__top_left[0], top_left, self.__box_width, self.__box_height)
 
-        return self.__top_left[0], top_left, self.__box_width, self.__box_height
+    def export_squares():
+        pass
 
-    def test_find_top_left_cell(self):
-        gridImage.find_top_left_cell()       
-        #self.__display_cropped_image(x, y, 300, 300)
-        
-        
-
-gridImage = GridImage("test_grids/grid_image_2.jpg")
+gridImage = GridImage("test_grids/grid_image_6.jpg")
 gridImage.find_squares()
-print(gridImage.test_find_top_left_cell())
+print(gridImage.find_top_left_cell())
