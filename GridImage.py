@@ -32,9 +32,12 @@ class GridImage:
         cv2.imshow(title, image[y:y+h, x:x+w])
         cv2.waitKey(0)
 
+    def __crop_image(self, image, x, y, w, h):
+        return image[y:y+h, x:x+w]
+
     def mask_image(self, thresh=100):
         test =  cv2.threshold(self.__image, thresh, 255, cv2.THRESH_BINARY_INV)[1]
-        self.__display_img(test)
+        # self.__display_img(test)
         return test
 
     def find_squares(self):
@@ -66,8 +69,8 @@ class GridImage:
                         bot_left = [x, y, w, h]
                     if y < self.__height - 1 and y > bot_right[1] and x > self.__width / 2:
                         bot_right = [x, y, w, h] 
-        for square in [top_left, top_right, bot_left, bot_right]:
-            self.__display_square(square)
+        # for square in [top_left, top_right, bot_left, bot_right]:
+        #     self.__display_square(square)
 
         print(top_left, top_right, bot_left, bot_right)
         self.__top_left = top_left
@@ -75,14 +78,31 @@ class GridImage:
         self.__bot_left = bot_left
         self.__bot_right = bot_right
 
-    def find_top_left_cell(self):
-        crop_y = ((self.__bot_left[1] - self.__top_right[1]) / 8) + self.__top_left[1]
-        crop_y = int(crop_y)
-        self.__display_cropped_image(self.__top_left[0]+40, crop_y, 400, 400)
-        #cropped_image = self.__image[crop_y:crop_y+300, self.__top_left[0]:self.__top_left[0]+300]
-        x_offset = self.__top_left[0]
-        y_offset = crop_y
+        self.__box_width = int((top_left[2] + top_right[2] + bot_left[2]) / 3)
+        self.__box_height = int((top_left[3] + top_right[3] + bot_left[3]) / 3)
 
+    def find_top_left_cell(self):        
+        top_left = int(self.__top_left[1] + (1.5 * self.__box_height))
+
+        search_x = self.__top_left[0]
+        search_y = top_left
+
+        img = self.__crop_image(self.__image, search_x, search_y, self.__box_width, int(1.5 * self.__box_height))
+
+        thresh = cv2.threshold(img, 150, 255, cv2.THRESH_BINARY_INV)[1]
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        for contour in contours:
+            perimeter = cv2.arcLength(contour, False)
+            approx = cv2.approxPolyDP(contour, 0.04 * perimeter, True)
+            x, y, w, h = cv2.boundingRect(approx)
+
+            if w > self.__box_width / 2 and h > self.__box_height / 2:
+                self.__display_cropped_image(search_x+x, search_y+y, int(self.__box_width*0.7), int(self.__box_height*1.1))
+
+        self.__display_cropped_image(self.__top_left[0], top_left, self.__box_width, self.__box_height)
+
+        return self.__top_left[0], top_left, self.__box_width, self.__box_height
 
     def test_find_top_left_cell(self):
         gridImage.find_top_left_cell()       
@@ -90,6 +110,6 @@ class GridImage:
         
         
 
-gridImage = GridImage("test_grids/grid_image_4.jpg")
+gridImage = GridImage("test_grids/grid_image_2.jpg")
 gridImage.find_squares()
-gridImage.test_find_top_left_cell()
+print(gridImage.test_find_top_left_cell())
