@@ -110,11 +110,13 @@ def get_image_squares(image):
             markers.append(approx)
             x, y, w, h = cv2.boundingRect(approx)
             rect_angle = cv2.minAreaRect(approx)[2]
+            if (rect_angle > 45):
+                rect_angle -= 90
             totalAngle += rect_angle
             totalCount += 1
-            # display_cropped_image(x, y, w, h, "Contour", image)
 
             # print(f"w: {w}, h: {h}, a: {rect_angle}")
+            # display_cropped_image(x, y, w, h, "Contour", image)
         elif len(approx) == 4:
             print(f"Rejected contour area: {area}")
 
@@ -220,4 +222,4 @@ def get_image_squares(image):
 
 
 if __name__ == "__main__":
-    get_image_squares(cv2.imread("image4.jpg"))
+    get_image_squares(cv2.imread("image.jpg"))
