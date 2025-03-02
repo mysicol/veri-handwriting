@@ -81,11 +81,14 @@ export default function WriteRight() {
 	  <div className="apple-container">
 	  	<h1 className="header">WriteRight</h1>
 	  	<div className="apple-text-container">
-        		<p className="apple-text">Get started by submitting a photo of your beautiful handwriting! **Try to keep only one letter per box :)</p>
+        		<p className="apple-text">Get started by submitting a photo of your handwriting! <i>(one letter per box)</i></p>
 			<div id="form">
-            		<input type="file" />
+                {/* <input id="phrase" type="text"></input> */}
+                <label for="file-upload-button" class="input-buttons">Upload image</label>
+            		<input type="file" id="file-upload-button" />
             		<img src={form.image} />
-            		<button className="submit-button" onClick={sendForm}>
+                <label for="submit-button" class="input-buttons">Submit</label>
+            		<button id="submit-button" className="submit-button" onClick={sendForm}>
         		Submit
         		</button>
 		</div>

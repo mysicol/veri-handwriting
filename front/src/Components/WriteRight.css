@@ -23,7 +23,7 @@
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
-  color: #6B9865;
+  color: #5b8156;
 }
 
 .content {
@@ -137,6 +137,36 @@ h1, h2, h3 {
 }
 
 .apple-text {
-  padding: 20px;
-  color: #004AAD;
+  color: #083b7d;
+  text-align: center;
+  padding: 15px 20px 5px 20px;
+  /* background-color: red; */
+}
+
+.input-buttons {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f0d9a5;
+  border-radius: 12px;
+  color: #083b7d;
+}
+
+#phrase {
+  display: block;
+  width: 200px;
+}
+
+.input-buttons:hover {
+  color: #7d0823;
+  background-color: #d2be8f;
+}
+
+#submit-button {
+  display: none;
+}
+
+#file-upload-button {
+  display: none;
 }
