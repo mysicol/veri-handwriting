@@ -33,18 +33,22 @@ export default function WriteRight() {
       <h1 className="header">Here are your statistics!</h1>
       <div className="content">
         <div className="feedback">
+        <div className="summary">
+            <h3>What you Entered:</h3>
+            <div>{summary.input}</div>
+          </div>
           <div className="summary">
-            <h2>Summary:</h2>
+            <h3>Summary:</h3>
             <div>{summary.text}</div>
           </div>
-          <div className="scores">
+          <div className="summary">
             <h3>Score:</h3>
             <div className="neatness">Neatness: {summary.neatness}%</div>
             <div className="consistency">
               Consistency: {summary.consistency}%
             </div>
           </div>
-          <div className="worst">
+          <div className="summary">
             <h3>Letters to work on:</h3>
             <table className="worst-list">
               <tr>
@@ -77,10 +81,7 @@ export default function WriteRight() {
 	  <div className="apple-container">
 	  	<h1 className="header">WriteRight</h1>
 	  	<div className="apple-text-container">
-        		<h2 className="apple-text">Welcome to WriteRight</h2>
-        		<h2 className="apple-text">Get started by submitting a photo of</h2>
-	  		<h2 className="apple-text">your beautiful handwriting!</h2>
-        		<h3 className="apple-text">**Try to keep only one letter per box :)</h3>
+        		<p className="apple-text">Get started by submitting a photo of your beautiful handwriting! **Try to keep only one letter per box :)</p>
 			<div id="form">
             		<input type="file" />
             		<img src={form.image} />
