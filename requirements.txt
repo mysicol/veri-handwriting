@@ -2,4 +2,4 @@ opencv-python
 dotenv
 flask_cors
 flask
-PIL
+pillow
