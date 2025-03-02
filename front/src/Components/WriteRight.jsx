@@ -3,7 +3,7 @@ import axios from "axios";
 import "./WriteRight.css";
 
 export default function WriteRight() {
-  let [form, setForm] = useState({ image: "" });
+  let [form, setForm] = useState({ image: null });
   let [formSent, setFormSent] = useState(false);
   let [summary, setSummary] = useState({
     text: "",
@@ -24,7 +24,7 @@ export default function WriteRight() {
     let result = await axios.post("/api/image", form);
     console.log(result.data.summary);
     setSummary(result.data.summary);
-    setForm({ image: "" });
+    setForm({ image: null });
     setFormSent(true);
   };
 
