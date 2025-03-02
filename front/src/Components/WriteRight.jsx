@@ -74,18 +74,22 @@ export default function WriteRight() {
 
   let formPage = (
     <div className="form-container">
-      <div id="form">
-        <h1>Welcome to Write Right</h1>
-        <h2>
-          Get started by submitting a photo of your beautiful handwriting!
-        </h2>
-        <h3>**Try to keep only one letter per box :)</h3>
-        <input type="file" />
-        <img src={form.image} />
-        <button className="submit-button" onClick={sendForm}>
-          Submit
-        </button>
-      </div>
+	  <div className="apple-container">
+	  	<h1 className="header">WriteRight</h1>
+	  	<div className="apple-text-container">
+        		<h2 className="apple-text">Welcome to WriteRight</h2>
+        		<h2 className="apple-text">Get started by submitting a photo of</h2>
+	  		<h2 className="apple-text">your beautiful handwriting!</h2>
+        		<h3 className="apple-text">**Try to keep only one letter per box :)</h3>
+			<div id="form">
+            		<input type="file" />
+            		<img src={form.image} />
+            		<button className="submit-button" onClick={sendForm}>
+        		Submit
+        		</button>
+		</div>
+	   </div>
+      	</div>
     </div>
   );
 
