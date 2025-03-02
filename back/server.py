@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from GPTInterface import GPTInterface
 
 app = Flask(__name__)
 cors = CORS(app, origins="*")
@@ -9,7 +10,10 @@ def image():
     result = request.json
     print(result['image'])
 
+    input_text = "we r tests stufs"
+
     # TODO use model to get score
+    summary = GPTInterface().get_summary(input_text)
 
     worst = [
         {
@@ -32,7 +36,8 @@ def image():
     return jsonify(
         {
             "summary": {
-                "text": "This is a really long summary about how bad your handwriting is. It really is bad. You should seek help. No one can read your handwriting. You should give up on all your hopes and dreams. No one could love you. Womp womp.",
+                "input": input_text,
+                "text": summary,
                 "neatness": 75,
                 "consistency": 55,
                 "mostLegible": "a",
