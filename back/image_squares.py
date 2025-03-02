@@ -29,8 +29,10 @@ def rotate_contour(contour, image):
 
 def has_markings(rect):
     """Checks if a given rectangle area contains markings."""
-    gray_roi = cv2.cvtColor(rect, cv2.COLOR_BGR2GRAY)
-    
+    gray_roi_full = cv2.cvtColor(rect, cv2.COLOR_BGR2GRAY)
+
+    gray_roi = get_cropped_image(20, 20, gray_roi_full.shape[1] - 40, gray_roi_full.shape[0] - 40, gray_roi_full)
+
     # Compute mean pixel intensity
     mean_intensity = cv2.mean(gray_roi)[0]  
 
@@ -39,9 +41,12 @@ def has_markings(rect):
     edge_count = np.count_nonzero(edges)  # Count nonzero edge pixels
 
     print(f"Mean intensity: {mean_intensity}, Edge count: {edge_count}")
+    # cv2.imshow("gray", gray_roi)
+    # cv2.imshow("edges", edges)
+    # cv2.waitKey(0)
 
     # Thresholds to determine if it's a marked rectangle
-    return mean_intensity < 250 and edge_count > 50
+    return edge_count > 100
 
 def rotate_image(image, angle):
     """Rotates an image by the given angle while keeping the full image in view."""
@@ -152,8 +157,8 @@ def get_image_squares(image):
             x, y, w, h = cv2.boundingRect(approx)
             rect_angle = cv2.minAreaRect(approx)[2]
             cropped_full = get_cropped_image(x, y, w, h, rotated)
-            cv2.imshow("test", cropped_full)
-            cv2.waitKey(0)
+            # cv2.imshow("test", cropped_full)
+            # cv2.waitKey(0)
         elif len(approx) == 4:
             print(f"Rejected contour area: {area}")
 
@@ -200,10 +205,11 @@ def get_image_squares(image):
 
             if marked:
                 marked_squares.append(approx)
+                cv2.imshow("test", cropped)
+                cv2.waitKey(0)
             
-            
-            cv2.imshow("test", cropped)
-            cv2.waitKey(0)
+            # cv2.imshow("test", cropped)
+            # cv2.waitKey(0)
 
         elif len(approx) == 4:
             print(f"Rejected contour area: {area}")
