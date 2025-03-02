@@ -53,3 +53,14 @@ In another terminal, run:
 `npm run dev` <br>
 
 Visit the localhost address generated to view the program.
+
+## Authors
+Francisco Cruz-Urbanc, fjc59@drexel.edu
+
+William Dorman
+
+Adam Steppe
+
+Abigail Hatcher, ah3658@drexel.edu
+
+Charlie Meader
