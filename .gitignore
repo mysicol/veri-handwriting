@@ -1,3 +1,4 @@
 *venv/
 *characters/*
 __pycache__/
+*.env
