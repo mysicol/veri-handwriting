@@ -65,11 +65,11 @@ export default function WriteRight() {
           </div>
         </div>
         <div className="special">
-          <div className="most-legible">
-            Most Legible: {summary.mostLegible}
+          <div className="summary most-legible">
+            <h2>Most Legible:</h2> {summary.mostLegible}
           </div>
-          <div className="most-consistent">
-            Most Consistent: {summary.mostConsistent}
+          <div className="summary most-legible">
+            <h2>Most Consistent:</h2> {summary.mostConsistent}
           </div>
         </div>
       </div>

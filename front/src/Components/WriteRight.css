@@ -12,7 +12,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: blueviolet;
+  background-color: #eadbb9;
 }
 
 .header {
@@ -21,9 +21,10 @@
   background-size: cover;
   background-position: center;
   padding: 10px;
-  margin: 10px;
+  margin: 15px;
   border-radius: 10px;
   color: #5b8156;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px;
 }
 
 .content {
@@ -32,16 +33,19 @@
   height: 600px;
   width: 1000px;
   padding: 10px;
-  background-color: blue;
+  background-color: #c6b283;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px;
+  border-radius: 10px;
 }
 
 .feedback {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: aliceblue;
+  background-color: #AE5151;
   width: 100%;
   height: 100%;
+  border-radius: 10px 0px 0px 10px;
 }
 
 .summary {
@@ -49,10 +53,20 @@
   flex-direction: column;
   align-items: center;
   /* background-color: brown; */
-  border-bottom: solid black;
-  margin: 5px 10px 0px 10px;
-  padding: 15px;
+  /* border: solid black; */
+  border-radius: 8px;
+  margin: 10px 10px 10px 10px;
+  padding: 10px 15px 15px 15px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px;
+  background-color: #faf7f0;
+  transition-duration: 500ms;
 }
+
+.summary:hover {
+  transition-duration: 500ms;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+
 
 body {
   font-family: "Inter", serif;
@@ -93,15 +107,13 @@ h1, h2, h3 {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: green;
+  background-color: #5b8156;
+  border-radius: 0px 10px 10px 0px;
 }
 
 .most-legible {
-  background-color: darkolivegreen;
-}
-
-.most-consistent {
-  background-color: lavender;
+  width: 430px;
+  height: 30%;
 }
 
 .form-container {
@@ -132,8 +144,9 @@ h1, h2, h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+  border-radius: 15px;
   background-color: #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px;
 }
 
 .apple-text {
@@ -149,8 +162,9 @@ h1, h2, h3 {
   padding: 10px;
   cursor: pointer;
   background-color: #f0d9a5;
-  border-radius: 12px;
+  border-radius: 8px;
   color: #083b7d;
+  transition-duration: 200ms;
 }
 
 #phrase {
@@ -161,6 +175,7 @@ h1, h2, h3 {
 .input-buttons:hover {
   color: #7d0823;
   background-color: #d2be8f;
+  transition-duration: 200ms;
 }
 
 #submit-button {

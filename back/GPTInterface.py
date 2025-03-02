@@ -6,11 +6,11 @@ class GPTInterface:
         APIKeys.set_var('OPENAI_API_KEY')
         self.__gpt = openai.OpenAI()
         
-    def get_summary(self, thing):
+    def get_summary(self, thing, prompt):
         completion = self.__gpt.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Explain any spelling/grammar errors you find in the following content. Do NOT comment on capitalization or punctuation errors; assume all inputs will be in lowercase and lack punctuation. Be encouraging like you are talking to a child."},
+                {"role": "system", "content": prompt},
                 {"role": "user", "content": thing}
             ]
         )
