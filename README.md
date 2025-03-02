@@ -59,8 +59,8 @@ Francisco Cruz-Urbanc, fjc59@drexel.edu
 
 William Dorman
 
-Adam Steppe
-
 Abigail Hatcher, ah3658@drexel.edu
 
 Charlie Meader
+
+Adam Steppe
