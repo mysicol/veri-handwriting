@@ -2,15 +2,54 @@ import numpy
 from enum import Enum
 import random
 import math
+import os
+from PIL import Image
+import pickle
 
 class Methods(Enum):
     DIRECT_LINEAR_REGRESSION = 0
     GRADIENT_LOGISTIC_REGRESSION = 1
     SVM = 2
 
+def makeModels(imgdir, method=Methods.DIRECT_LINEAR_REGRESSION):
+    MESSY = 0
+    NEAT = 1
+
+    datasets = {"a": [], "b": [], "c": [], "d": [], "e": [], "f": [], "g": [], "h": [],
+                "i": [], "j": [], "k": [], "l": [], "m": [], "n": [], "o": [], "p": [],
+                "q": [], "r": [], "s": [], "t": [], "u": [], "v": [], "w": [], "x": [],
+                "y": [], "z": []}
+    
+    for filename in os.listdir(imgdir):
+        parts = filename.split('.')
+        im = Image.open(imgdir + "/" + filename)
+        im = im.resize((40,40))
+        im = numpy.array([im.getdata()], dtype=numpy.float64)
+        im = im.reshape(-1, im.shape[1])
+        im = im.flatten()
+        im = numpy.array([im], dtype=numpy.float64)
+        if parts[1] == "messy":
+            im = [numpy.append(im[0], [MESSY], axis = 0)]
+        else:
+            im = [numpy.append(im[0], [NEAT], axis = 0)]
+        if len(datasets[parts[0][0]]) == 0:
+            datasets[parts[0][0]] = im
+        else:
+            datasets[parts[0][0]] = numpy.append(datasets[parts[0][0]], im, axis = 0)
+
+    models = {}
+    for letter in datasets:
+        X = datasets[letter][:,:-1]
+        Y = datasets[letter][:,[-1]]
+        models[letter] = MLModel(X, Y, method)
+    
+    with open('weights.pkl', 'wb') as f:
+        pickle.dump(models, f)
+    
+    print("Written successfully!")
 
 class MLModel:
-    def __init__(self, X, Y, method=Methods.DIRECT_LINEAR_REGRESSION, learningRate=0.3, epochs=10000, epsilon=0.0000001):
+    def __init__(self, X, Y, method, learningRate=0.3, epochs=10000, epsilon=0.0000001):
         self.__method = method
         self.__X = X
         self.__Y = Y
@@ -24,7 +63,7 @@ class MLModel:
 
     def getDLRWeights(self):
         XwBias = numpy.append(numpy.ones((self.__X.shape[0], 1)), self.__X, axis = 1)
-        w = numpy.linalg.inv((XwBias.T) @ XwBias) @ (XwBias.T) @ self.__Y
+        w = numpy.linalg.pinv((XwBias.T) @ XwBias) @ (XwBias.T) @ self.__Y
         return w
 
     def getGLRWeights(self, learningRate, epochs, epsilon):

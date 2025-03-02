@@ -1,9 +1,17 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from GPTInterface import GPTInterface
+from MLModel import Methods, makeModels, MLModel
+import pickle
 
 app = Flask(__name__)
 cors = CORS(app, origins="*")
+
+# makeModels("letters", Methods.DIRECT_LINEAR_REGRESSION) ONLY UNCOMMENT TO RETRAIN MODELS
+
+with open('weights.pkl', 'rb') as f:
+    models = pickle.load(f)
+print("Read successfully!")
 
 @app.route("/api/image", methods=['POST'])
 def image():
@@ -49,4 +57,4 @@ def image():
 
 if __name__ == "__main__":
     # debug = True so we can see live updates while developing
-    app.run(debug=True, port=3000)
+    app.run(debug=False, port=3000)
