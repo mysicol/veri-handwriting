@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import sys
 
 def get_cropped_image(x, y, w, h, image=None):
     return image[y:y+h, x:x+w]
@@ -71,6 +72,9 @@ def rotate_image(image, angle):
     
     return rotated
 
+def sort_key(square, thresh):
+        x, y, w, h = cv2.boundingRect(square)
+        return (y // thresh, x)
 
 def get_image_squares(image):
 
@@ -89,13 +93,13 @@ def get_image_squares(image):
     contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 500]
 
     # Define size limits
-    min_area = 500       # Smallest marker we accept
+    min_area = 1000       # Smallest marker we accept
     max_area = 100000     # Largest marker (adjust based on your image)
 
     # Dictionary to store potential markers (outer square -> inner square count)
     markers = []
 
-    print(len(contours))
+    # print(len(contours))
 
     totalAngle = 0
     totalCount = 0
@@ -146,8 +150,6 @@ def get_image_squares(image):
     markers = []
     main_contour = []
 
-    print(len(contours))
-
     # Identify potential marker candidates
     for cnt in contours:
         approx = cv2.approxPolyDP(cnt, 0.02 * cv2.arcLength(cnt, True), True)
@@ -157,12 +159,16 @@ def get_image_squares(image):
         if len(approx) == 4 and min_area < area < max_area:
             main_contour.append(approx)
             x, y, w, h = cv2.boundingRect(approx)
+            y = y - 10
+            h = h + 20
+            x = x - 10
+            w = w + 20
             rect_angle = cv2.minAreaRect(approx)[2]
             cropped_full = get_cropped_image(x, y, w, h, rotated)
             # cv2.imshow("test", cropped_full)
             # cv2.waitKey(0)
-        elif len(approx) == 4:
-            print(f"Rejected contour area: {area}")
+        # elif len(approx) == 4:
+        #     print(f"Rejected contour area: {area}")
 
 
     ################################################################################################
@@ -182,12 +188,10 @@ def get_image_squares(image):
     contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 500]
 
     # Define size limits
-    min_area = 500       # Smallest marker we accept
+    min_area = 10000       # Smallest marker we accept
     max_area = 100000     # Largest marker (adjust based on your image)
 
     marked_squares = []
-
-    print(len(contours))
 
     totalAngle = 0
     totalCount = 0
@@ -202,13 +206,15 @@ def get_image_squares(image):
             x, y, w, h = cv2.boundingRect(approx)
 
             cropped = get_cropped_image(x, y, w, h, cropped_full)
+            # cv2.imshow("a", cropped)
+            # cv2.waitKey(0)
             marked = has_markings(cropped)
-            print(marked)
+            # print(marked)
 
             if marked:
                 marked_squares.append(approx)
-                cv2.imshow("test", cropped)
-                cv2.waitKey(0)
+                # cv2.imshow("test", cropped)
+                # cv2.waitKey(0)
             
             # cv2.imshow("test", cropped)
             # cv2.waitKey(0)
@@ -217,9 +223,50 @@ def get_image_squares(image):
             print(f"Rejected contour area: {area}")
 
     print(f"Total detected contours: {len(contours)}")
-    print(f"Filtered contours (possible markers): {len(markers)}")
+    print(f"Filtered contours: {len(marked_squares)}")
+
+    # Sort the marked_squares list by their top-left corner (x, y) coordinates
+
+
+    total_width = sum(cv2.boundingRect(square)[2] for square in marked_squares)
+    max_height = max(cv2.boundingRect(square)[3] for square in marked_squares)
+    min_height = min(cv2.boundingRect(square)[3] for square in marked_squares)
+
+    sorting_key = lambda square: sort_key(square, min_height - 50)
+
+    marked_squares = sorted(marked_squares, key=sorting_key)
+
+    print(min_height)
+
+    canvas = np.zeros((max_height, total_width, 3), dtype=np.uint8)
+
+    current_x = 0
+
+    for square in marked_squares:
+        x, y, w, h = cv2.boundingRect(square)
+        cropped = get_cropped_image(x, y, w, h, cropped_full)
+
+        canvas[0:h, current_x:current_x + w] = cropped
+        current_x += w
+
+    cv2.imshow("Marked Squares", canvas)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
     return marked_squares
 
 
 if __name__ == "__main__":
-    get_image_squares(cv2.imread("image.jpg"))
+
+    if len(sys.argv) < 2:
+        image_path = "image.jpg"
+    else:
+        image_path = sys.argv[1]
+
+    image = cv2.imread(image_path)
+
+    if image is None:
+        print(f"Error: Unable to load image at {image_path}")
+        sys.exit(1)
+
+    get_image_squares(image)
