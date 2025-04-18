@@ -1,5 +1,9 @@
 # VeriHandwriting
 
+![Input animation](/documentation/index.png)
+![Results animation](/documentation/upload_image.gif)
+![Results screenshot](/documentation/statistics_page.png)
+
 ### Authentication keys
 
 You must have a valid authentication key for the OpenAI API. Store it in a file called `back/.env` in the following format:

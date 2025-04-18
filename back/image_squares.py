@@ -277,7 +277,7 @@ def get_characters(image):
             character = results[0][1]
             if len(character) > 1:
                 character = character[0]
-
+        print(character)
         characters.append((cv2.resize(square, (40, 40)), character))
 
     return characters
