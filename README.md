@@ -18,7 +18,7 @@ This application is written in Python and React. When an image is uploaded, it i
 
 ## Running WriteRight
 
-Feel free to use "image.jpg" in the "sample_image/" directory for testing!
+Feel free to use `image.jpg` in the `sample_image/` directory to demo our project!
 
 ### Authentication keys
 
