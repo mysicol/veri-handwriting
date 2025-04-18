@@ -6,17 +6,25 @@ You must have a valid authentication keys for OpenAI API to run. Store it in a f
 
 `OPENAI_API_KEY="your_openai_key"`
 
+## Setup
+
+### Authentication keys
+
+You must have a valid authentication key for the OpenAI API. Store it in a file called `back/.env` in the following format:
+
+`OPENAI_API_KEY="your_openai_key"`
+
 ### Running on Windows
 
 In a terminal, run:
 
-`cd back/`
+`python -m venv .venv` (only do the very first time to create venv)
 
-`python -m venv venv` (only do the very first time to create venv)
-
-`venv/Scripts/activate`
+`.venv/Scripts/activate`
 
 `pip install -r requirements.txt`
+
+`cd back`
 
 `python server.py` <br><br>
 
@@ -34,13 +42,13 @@ Visit the localhost address generated to view the program.
 
 In a terminal, run:
 
-`cd back/`
+`python3 -m venv .venv` (only do the very first time to create venv)
 
-`python3 -m venv venv` (only do the very first time to create venv)
-
-`source venv/bin/activate`
+`source .venv/bin/activate`
 
 `pip3 install -r requirements.txt`
+
+`cd back`
 
 `python3 server.py` <br><br>
 

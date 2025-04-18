@@ -1,3 +1,6 @@
+openai
 opencv-python
+dotenv
 flask_cors
 flask
+pillow

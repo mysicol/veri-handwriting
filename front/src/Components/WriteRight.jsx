@@ -3,7 +3,7 @@ import axios from "axios";
 import "./WriteRight.css";
 
 export default function WriteRight() {
-  let [form, setForm] = useState({ image: "" });
+  let [form, setForm] = useState({ image: null });
   let [formSent, setFormSent] = useState(false);
   let [summary, setSummary] = useState({
     text: "",
@@ -24,7 +24,7 @@ export default function WriteRight() {
     let result = await axios.post("/api/image", form);
     console.log(result.data.summary);
     setSummary(result.data.summary);
-    setForm({ image: "" });
+    setForm({ image: null });
     setFormSent(true);
   };
 
@@ -33,18 +33,22 @@ export default function WriteRight() {
       <h1 className="header">Here are your statistics!</h1>
       <div className="content">
         <div className="feedback">
+        <div className="summary">
+            <h3>What you Entered:</h3>
+            <div>{summary.input}</div>
+          </div>
           <div className="summary">
-            <h2>Summary:</h2>
+            <h3>Summary:</h3>
             <div>{summary.text}</div>
           </div>
-          <div className="scores">
+          <div className="summary">
             <h3>Score:</h3>
             <div className="neatness">Neatness: {summary.neatness}%</div>
             <div className="consistency">
               Consistency: {summary.consistency}%
             </div>
           </div>
-          <div className="worst">
+          <div className="summary">
             <h3>Letters to work on:</h3>
             <table className="worst-list">
               <tr>
@@ -61,11 +65,11 @@ export default function WriteRight() {
           </div>
         </div>
         <div className="special">
-          <div className="most-legible">
-            Most Legible: {summary.mostLegible}
+          <div className="summary most-legible">
+            <h2>Most Legible:</h2> {summary.mostLegible}
           </div>
-          <div className="most-consistent">
-            Most Consistent: {summary.mostConsistent}
+          <div className="summary most-legible">
+            <h2>Most Consistent:</h2> {summary.mostConsistent}
           </div>
         </div>
       </div>
@@ -77,14 +81,14 @@ export default function WriteRight() {
 	  <div className="apple-container">
 	  	<h1 className="header">WriteRight</h1>
 	  	<div className="apple-text-container">
-        		<h2 className="apple-text">Welcome to WriteRight</h2>
-        		<h2 className="apple-text">Get started by submitting a photo of</h2>
-	  		<h2 className="apple-text">your beautiful handwriting!</h2>
-        		<h3 className="apple-text">**Try to keep only one letter per box :)</h3>
+        		<p className="apple-text">Get started by submitting a photo of your handwriting! <i>(one letter per box)</i></p>
 			<div id="form">
-            		<input type="file" />
+                {/* <input id="phrase" type="text"></input> */}
+                <label for="file-upload-button" class="input-buttons">Upload image</label>
+            		<input type="file" id="file-upload-button" />
             		<img src={form.image} />
-            		<button className="submit-button" onClick={sendForm}>
+                <label for="submit-button" class="input-buttons">Submit</label>
+            		<button id="submit-button" className="submit-button" onClick={sendForm}>
         		Submit
         		</button>
 		</div>
