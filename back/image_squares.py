@@ -272,12 +272,14 @@ def get_characters(image):
         square = squares[i]
         results = reader.readtext(squares[i], allowlist='abcdefghijklmnopqrstuvwxyz')
 
+        character = " "
         if len(results) > 0:
             character = results[0][1]
             if len(character) > 1:
                 character = character[0]
-            characters.append((cv2.resize(square, (40, 40)), character))
-    
+
+        characters.append((cv2.resize(square, (40, 40)), character))
+
     return characters
 
 if __name__ == "__main__":

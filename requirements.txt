@@ -1,3 +1,4 @@
+easyocr
 openai
 opencv-python
 dotenv

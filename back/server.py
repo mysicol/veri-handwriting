@@ -26,7 +26,7 @@ def image():
     squares = image_squares.characters_from_np(file)
 
     scores = {}
-    print("MODEL:", models)
+    input_text = ""
     for square in squares:
         if square[1] in models:
             # Process the image
@@ -43,9 +43,10 @@ def image():
             if square[1] not in scores:
                 scores[square[1]] = []
             scores[square[1]].append(neatness)
-    
-    print(scores)
 
+        # Append to input string
+        input_text.join(square[1])
+    
     for key in scores.keys():
         scores[key] = int(np.mean(scores[key]) * 100)
     
@@ -56,7 +57,7 @@ def image():
     text_arr = [square[1] for square in squares]
     input_text = "".join(text_arr)
 
-    prompt = "Explain any spelling/grammar errors you find in the following content. Do NOT comment on capitalization or punctuation errors; assume all inputs will be in lowercase and lack punctuation. Be encouraging like you are talking to a child."
+    prompt = "Explain any spelling/grammar errors you find in the following (written) content. Do NOT comment on capitalization or punctuation errors; assume all inputs will be in lowercase and lack punctuation. Be encouraging like you are talking to a child."
 
     legible_letter = str(results[0][1])
     legible_score = str(results[0][0])
