@@ -18,6 +18,8 @@ This application is written in Python and React. When an image is uploaded, it i
 
 ## Running WriteRight
 
+Feel free to use "image.jpg" in the "sample_image/" directory for testing!
+
 ### Authentication keys
 
 You must have a valid authentication key for the OpenAI API. Store it in a file called `back/.env` in the following format:
