@@ -1,13 +1,20 @@
-# VeriHandwriting
+# WriteRight
+
+### Philly Codefest, April 2024 at Drexel University
+
+## Overview
+
+TODO
 
 <img src="/documentation/index.png" width="1000">
 <img src="/documentation/upload_image.gif" width="1000">
 <img src="/documentation/statistics_page.png" width="1000">
 
+## Description
 
-![Input animation](/documentation/index.png)
-![Results animation](/documentation/upload_image.gif)
-![Results screenshot](/documentation/statistics_page.png)
+TODO
+
+## Running
 
 ### Authentication keys
 
