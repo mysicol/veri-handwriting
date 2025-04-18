@@ -2,14 +2,6 @@
 
 ### Authentication keys
 
-You must have a valid authentication keys for OpenAI API to run. Store it in a file called `back/.env` in the following format:
-
-`OPENAI_API_KEY="your_openai_key"`
-
-## Setup
-
-### Authentication keys
-
 You must have a valid authentication key for the OpenAI API. Store it in a file called `back/.env` in the following format:
 
 `OPENAI_API_KEY="your_openai_key"`
