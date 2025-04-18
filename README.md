@@ -1,8 +1,8 @@
 # VeriHandwriting
 
-![Input animation](/documentation/index.png)
-![Results animation](/documentation/upload_image.gif)
-![Results screenshot](/documentation/statistics_page.png)
+![Input animation](/documentation/index.png) { width: 1000px }
+![Results animation](/documentation/upload_image.gif) { width: 1000px }
+![Results screenshot](/documentation/statistics_page.png) { width: 1000px }
 
 ### Authentication keys
 
