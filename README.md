@@ -1,10 +1,12 @@
 # WriteRight
 
-### Philly Codefest, April 2024 at Drexel University
+### Philly Codefest, March 2025 at Drexel University
 
 ## Overview
 
-TODO
+WriteRight is a tool that utilizes machine learning and artificial intelligence to assist users in improving their handwriting skills! Given a handwritten sample, WriteRight identifies characters and compiles a report including spelling and grammar feedback as well as suggestions for particular characters to focus on writing more neatly.
+
+WriteRight is intended for use by children learning to write and by foreign learners practicing written English. We hope to improve and automate the process of learning any written language, with the goal of extending our technology to identify non-English characters in the future.
 
 <img src="/documentation/index.png" width="1000">
 <img src="/documentation/upload_image.gif" width="1000">
@@ -12,9 +14,9 @@ TODO
 
 ## Description
 
-TODO
+This application is written in Python and React. When an image is uploaded, it is split into a grid of squares using OpenCV, and the character in each square is identified using the EasyOCR text recognition model. Then the images are assigned a neatness percentage using our trained linear regression model. Finally, these statistics are compiled in a report and the OpenAI API is used to provide supplementary verbal feedback.
 
-## Running
+## Running WriteRight
 
 ### Authentication keys
 

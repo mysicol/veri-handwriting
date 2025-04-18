@@ -79,7 +79,7 @@ export default function WriteRight() {
             <h2>Least Legible:</h2> {summary.mostLegible}
           </div>
           <div className="summary most-legible">
-            <h2>Most Consistent:</h2> {summary.mostConsistent}
+            <h2>Most Legible:</h2> {summary.mostConsistent}
           </div>
         </div>
       </div>

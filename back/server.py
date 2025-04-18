@@ -48,7 +48,7 @@ def image():
         input_text.join(square[1])
     
     for key in scores.keys():
-        scores[key] = int(np.mean(scores[key]) * 100)
+        scores[key] = round(np.mean(scores[key]) * 100)
     
     print(sorted(scores.keys()))
 
@@ -65,7 +65,7 @@ def image():
 
     consistent_letter = str(results[-1][1])
     consistent_score = str(results[-1][0])
-    prompt_consistent = "Give an extremely silly and mean and sassy, one-sentence message like you are talking to a child explaining that the following letter was the most consistently written in the sample of handwriting that was just processed. Please do not use the word 'brat' AT ALL. also DO NOT use terms of endearment AT ALL."
+    prompt_consistent = "Give an extremely silly and mean and sassy, one-sentence message like you are talking to a child explaining that the following letter was the most legibly written in the sample of handwriting that was just processed. Please do not use the word 'brat' AT ALL. also DO NOT use terms of endearment AT ALL."
 
     # TODO use model to get score
     summary = GPTInterface().get_summary(input_text, prompt)
@@ -83,15 +83,17 @@ def image():
     if len(worst) > 3:
         worst = worst[0:3]
 
+    scores = [result[0] for result in results]
+
     return jsonify(
         {
             "summary": {
                 "input": input_text,
                 "text": summary,
-                "neatness": 75,
-                "consistency": 55,
+                "neatness": str(round(np.mean(scores))),
+                "consistency": round(np.std(scores)),
                 "mostLegible": "Your least legible letter was '" + legible_letter + "', at " + legible_score + "% legibility. " + legibility,
-                "mostConsistent": "Your most consistent letter was '" + consistent_letter + "', at " + consistent_score + "% legibility. " + consistence,
+                "mostConsistent": "Your most legible letter was '" + consistent_letter + "', at " + consistent_score + "% legibility. " + consistence,
                 "worst": worst,
             }
         }
