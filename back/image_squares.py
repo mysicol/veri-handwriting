@@ -1,4 +1,5 @@
 import cv2
+import easyocr
 import numpy as np
 import sys
 
@@ -242,31 +243,53 @@ def get_image_squares(image):
 
     current_x = 0
 
+    cropped_images = []
+
     for square in marked_squares:
         x, y, w, h = cv2.boundingRect(square)
         cropped = get_cropped_image(x, y, w, h, cropped_full)
+        cropped_images.append(cropped)
 
         canvas[0:h, current_x:current_x + w] = cropped
         current_x += w
 
-    cv2.imshow("Marked Squares", canvas)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("Marked Squares", canvas)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
-    return marked_squares
+    return cropped_images
 
+def characters_from_np(img):
+    return get_characters(cv2.imdecode(img, cv2.IMREAD_COLOR))
+
+def get_characters(image):
+    squares = get_image_squares(image)
+
+    reader = easyocr.Reader(["en"])
+    
+    characters = []
+    for i in range(len(squares)):
+        square = squares[i]
+        results = reader.readtext(squares[i], allowlist='abcdefghijklmnopqrstuvwxyz')
+
+        if len(results) > 0:
+            character = results[0][1]
+            if len(character) > 1:
+                character = character[0]
+            characters.append((cv2.resize(square, (40, 40)), character))
+    
+    return characters
 
 if __name__ == "__main__":
-
     if len(sys.argv) < 2:
         image_path = "image.jpg"
     else:
         image_path = sys.argv[1]
 
-    image = cv2.imread(image_path)
+        image = cv2.imread(image_path)
 
     if image is None:
         print(f"Error: Unable to load image at {image_path}")
         sys.exit(1)
 
-    get_image_squares(image)
+    print(get_characters(image))

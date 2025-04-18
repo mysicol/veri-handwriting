@@ -20,8 +20,18 @@ export default function WriteRight() {
     ],
   }); // default data
 
+  const imageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setForm({ image: file });
+    }
+  };
+
   let sendForm = async function () {
-    let result = await axios.post("/api/image", form);
+    const form_data = new FormData()
+    form_data.append("image", form.image)
+
+    let result = await axios.post("/api/image", form_data);
     console.log(result.data.summary);
     setSummary(result.data.summary);
     setForm({ image: null });
@@ -66,7 +76,7 @@ export default function WriteRight() {
         </div>
         <div className="special">
           <div className="summary most-legible">
-            <h2>Most Legible:</h2> {summary.mostLegible}
+            <h2>Least Legible:</h2> {summary.mostLegible}
           </div>
           <div className="summary most-legible">
             <h2>Most Consistent:</h2> {summary.mostConsistent}
@@ -85,7 +95,7 @@ export default function WriteRight() {
 			<div id="form">
                 {/* <input id="phrase" type="text"></input> */}
                 <label for="file-upload-button" class="input-buttons">Upload image</label>
-            		<input type="file" id="file-upload-button" />
+            		<input type="file" id="file-upload-button" onChange={imageUpload} />
             		<img src={form.image} />
                 <label for="submit-button" class="input-buttons">Submit</label>
             		<button id="submit-button" className="submit-button" onClick={sendForm}>
