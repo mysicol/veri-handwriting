@@ -83,4 +83,4 @@ Abigail Hatcher, ah3658@drexel.edu
 
 Charlie Meader
 
-Adam Steppe
+Adam Steppe, aws69@drexel.edu
